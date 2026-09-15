@@ -739,4 +739,4 @@ Tests incluidos:
 
 ## Licencia
 
-Privado — © 2026.
+Public — © 2026.
