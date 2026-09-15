@@ -1,0 +1,46 @@
+# ===== Framework =====
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+python-multipart==0.0.20
+
+# ===== Config / validación =====
+pydantic==2.10.4
+pydantic-settings==2.7.1
+email-validator==2.2.0
+
+# ===== Base de datos (MySQL async) =====
+sqlalchemy==2.0.36
+asyncmy==0.2.10          # driver async para MySQL
+alembic==1.14.0
+pymysql==1.1.1           # driver sync (Alembic / scripts)
+cryptography==44.0.0     # requerido por pymysql/asyncmy para auth caching_sha2
+
+# ===== Seguridad =====
+passlib[bcrypt]==1.7.4
+bcrypt==4.2.1
+pyjwt==2.10.1
+
+# ===== Documentos =====
+pymupdf==1.25.1          # fitz (motor PDF)
+python-docx==1.1.2
+docxtpl==0.19.0
+reportlab==4.2.5
+qrcode[pil]==8.0
+pillow==11.0.0
+
+# ===== Datos (Excel/CSV/ODS) =====
+pandas==2.2.3
+openpyxl==3.1.5
+odfpy==1.4.1
+
+# ===== Plantillas =====
+jinja2==3.1.5
+
+# ===== Tareas pesadas =====
+celery==5.4.0
+redis==5.2.1
+flower==2.0.1
+
+# ===== Utilidades =====
+python-slugify==8.0.4
+aiofiles==24.1.0

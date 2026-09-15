@@ -1,0 +1,77 @@
+# ==========================================
+# Python
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+dist/
+build/
+eggs/
+*.whl
+.venv/
+venv/
+ENV/
+env/
+
+# Testing / Coverage
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# ==========================================
+# Node / Frontend (Vue + Vite)
+# ==========================================
+node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+*.tsbuildinfo
+
+# ==========================================
+# Environment variables (SECRETOS)
+# ==========================================
+.env
+.env.*
+!.env.example
+!.env.example.*
+
+# ==========================================
+# Runtime / Uploads / Generados
+# ==========================================
+backend/uploads/*
+!backend/uploads/.gitkeep
+backend/generated/*
+!backend/generated/.gitkeep
+*.log
+logs/
+
+# ==========================================
+# Docker
+# ==========================================
+*.pid
+docker-compose.override.yml
+
+# ==========================================
+# IDE / Editor
+# ==========================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+
+# ==========================================
+# OS
+# ==========================================
+.DS_Store
+Thumbs.db
+Desktop.ini
+ehthumbs.db
