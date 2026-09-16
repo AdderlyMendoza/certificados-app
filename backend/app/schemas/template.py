@@ -39,6 +39,9 @@ class LayoutField(BaseModel):
     # Contenido fijo (para type=text) o nombre de variable / plantilla de texto
     value: str | None = None
 
+    # Ajuste automático de tamaño de fuente para que el texto quepa en `width`
+    auto_fit: bool = False
+
 
 class QRConfig(BaseModel):
     """Configuración del código QR."""

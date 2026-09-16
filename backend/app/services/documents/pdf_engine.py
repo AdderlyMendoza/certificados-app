@@ -62,37 +62,38 @@ def get_page_size(pdf_path: Path, page: int = 0) -> tuple[float, float]:
 
 
 def _draw_text(page: "fitz.Page", field: LayoutField, text: str) -> None:
+    import logging
+    log = logging.getLogger("pdf_engine")
+    log.warning("FIELD: name=%s align=%s x=%.1f y=%.1f font_size=%.1f auto_fit=%s width=%s text=%s", field.name, field.align, field.x, field.y, field.font_size, field.auto_fit, field.width, text[:40])
+
     rgb = _hex_to_rgb(field.color)
     fontname = _resolve_font(field)
+    font = fitz.Font(fontname)
+
+    font_size = field.font_size
+    if field.auto_fit and field.width and field.width > 0:
+        text_width = font.text_length(text, fontsize=font_size)
+        if text_width > field.width:
+            font_size = max(4, font_size * field.width / text_width)
+
+    text_width = font.text_length(text, fontsize=font_size)
     page_width = page.rect.width
 
-    if field.align == "left" and field.rotation == 0:
-        point = fitz.Point(field.x, field.y + field.font_size)
-        page.insert_text(
-            point, text, fontname=fontname, fontsize=field.font_size, color=rgb
-        )
-        return
-
-    # Para alineación/rotación se usa un textbox
-    # field.x = punto de anclaje (borde izq para left, centro para center, borde der para right)
-    width = field.width or (len(text) * field.font_size * 0.6)
     if field.align == "center":
-        left = max(0, field.x - width / 2)
+        x = field.x - text_width / 2
     elif field.align == "right":
-        left = max(0, field.x - width)
+        x = field.x - text_width
     else:
-        left = field.x
-    right = min(left + width, page_width)
-    rect = fitz.Rect(left, field.y, right, field.y + field.font_size * 1.5)
-    align = {"left": 0, "center": 1, "right": 2}[field.align]
-    page.insert_textbox(
-        rect,
-        text,
-        fontname=fontname,
-        fontsize=field.font_size,
-        color=rgb,
-        align=align,
-        rotate=int(field.rotation) if field.rotation in (0, 90, 180, 270) else 0,
+        x = field.x
+
+    x = max(0, min(x, page_width - text_width))
+    y = field.y + font_size
+
+    log.warning("DRAW: x=%.1f y=%.1f font_size=%.1f text_width=%.1f page_width=%.1f", x, y, font_size, text_width, page_width)
+
+    point = fitz.Point(x, y)
+    page.insert_text(
+        point, text, fontname=fontname, fontsize=font_size, color=rgb
     )
 
 

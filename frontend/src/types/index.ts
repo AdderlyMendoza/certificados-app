@@ -65,6 +65,7 @@ export interface LayoutField {
   align: 'left' | 'center' | 'right'
   rotation: number
   value?: string | null
+  auto_fit?: boolean
 }
 
 export interface TemplateLayout {

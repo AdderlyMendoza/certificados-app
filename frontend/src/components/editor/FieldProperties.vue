@@ -217,6 +217,19 @@ const ALIGNS = [
             @click="setAlign(a.value)"
           >{{ a.icon }}</button>
         </div>
+
+        <!-- Auto-fit toggle -->
+        <div class="flex items-center gap-2">
+          <label class="flex items-center gap-1.5 text-xs cursor-pointer select-none">
+            <input
+              type="checkbox"
+              :checked="field.auto_fit ?? false"
+              class="h-3.5 w-3.5 rounded border-gray-300 text-brand-600 focus:ring-brand-500"
+              @change="update({ auto_fit: ($event.target as HTMLInputElement).checked }); commit()"
+            />
+            Auto-ajustar tamaño
+          </label>
+        </div>
       </section>
 
       <!-- Section: Page (multi-page PDFs) -->
