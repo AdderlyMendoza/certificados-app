@@ -5,6 +5,8 @@ import zipfile
 from pathlib import Path
 from typing import Any
 
+import fitz  # PyMuPDF
+
 from app.models.enums import GenerationStatus, TemplateType
 from app.models.generation import Generation, GenerationItem
 from app.models.template import Template
@@ -118,6 +120,15 @@ def run_generation(self, generation_id: int) -> dict[str, Any]:  # noqa: ANN001
         # Empaqueta en ZIP
         zip_path = out_dir / f"generacion_{gen.id}.zip"
         with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zf:
+            # PDF unido con todos los certificados
+            if produced:
+                merged_path = out_dir / "1-CERTIFICADOS-UNIDOS.pdf"
+                merged = fitz.open()
+                for pdf in produced:
+                    merged.insert_pdf(fitz.open(str(pdf)))
+                merged.save(str(merged_path), garbage=4, deflate=True)
+                merged.close()
+                zf.write(merged_path, arcname=merged_path.name)
             for pdf in produced:
                 zf.write(pdf, arcname=pdf.name)
 
